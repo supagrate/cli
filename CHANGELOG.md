@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.16](https://github.com/supagrate/cli/compare/v1.0.15...v1.0.16) (2023-10-20)
+
+
+### Bug Fixes
+
+* bump ([f392471](https://github.com/supagrate/cli/commit/f39247125a73d63ba2fe00bc948ef067962fd176))
+
 ## [1.0.15](https://github.com/supagrate/cli/compare/v1.0.14...v1.0.15) (2023-10-20)
 
 
