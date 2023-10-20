@@ -106,5 +106,5 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          npm publish --access public --tag "${{ steps.release.outputs.tag_name }}"
+          npm publish --access public
           npm dist-tag add "supagrate@${{ steps.release.outputs.tag_name }}" latest
