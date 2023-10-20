@@ -1,9 +1,14 @@
 builds:
-  - binary: supagrate
+  - id: supagrate
+    binary: supagrate
     goos:
       - windows
       - darwin
       - linux
-    goarch:
-      - amd64
-      - arm64
+
+release:
+  github:
+    owner: supagrate
+    name: cli
+  draft: false
+  mode: replace
