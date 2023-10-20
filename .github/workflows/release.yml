@@ -104,7 +104,7 @@ jobs:
         with:
           distribution: goreleaser
           version: latest
-          args: release --clean
+          args: build --clean -p 3 -f .goreleaser.yml
 
       - name: Publish npm
         if: ${{ steps.release.outputs.release_created }}
