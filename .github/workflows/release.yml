@@ -55,6 +55,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Force tags
+        run: git fetch --force --tags
+
       - name: Setup Go
         uses: actions/setup-go@v4
         with:
