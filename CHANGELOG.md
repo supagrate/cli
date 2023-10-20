@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.11](https://github.com/supagrate/cli/compare/v1.0.10...v1.0.11) (2023-10-20)
+
+
+### Bug Fixes
+
+* only upload artifacts if release created ([3212a01](https://github.com/supagrate/cli/commit/3212a0159295333b2cc42761131ee481b12d8cad))
+* try release with release please only ([464b74a](https://github.com/supagrate/cli/commit/464b74ac285514de80f71a927bb83672b7349d6d))
+
 ## [1.0.10](https://github.com/supagrate/cli/compare/v1.0.9...v1.0.10) (2023-10-20)
 
 
