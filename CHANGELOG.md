@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.6](https://github.com/supagrate/cli/compare/v1.0.5...v1.0.6) (2023-10-20)
+
+
+### Bug Fixes
+
+* force tag download upon release ([19654f1](https://github.com/supagrate/cli/commit/19654f19ec4e62dbf2a6e3a368129ac5e8f64633))
+
 ## [1.0.5](https://github.com/supagrate/cli/compare/v1.0.4...v1.0.5) (2023-10-20)
 
 
