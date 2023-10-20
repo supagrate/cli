@@ -49,6 +49,9 @@ jobs:
       contents: write
       pull-requests: write
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
       - name: Setup Go
         uses: actions/setup-go@v4
         with:
@@ -69,9 +72,6 @@ jobs:
           package-name: ${{ env.CLI }}
           extra-files: |
             package.json
-
-      - name: Checkout
-        uses: actions/checkout@v4
 
       - name: Go Releaser
         uses: goreleaser/goreleaser-action@v5
