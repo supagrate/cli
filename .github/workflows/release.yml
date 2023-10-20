@@ -83,7 +83,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           distribution: goreleaser
-          version: ${{ steps.release.outputs.tag_name }}
+          version: latest
           args: release --clean
 
       - name: Tag major and minor versions
