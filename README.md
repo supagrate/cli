@@ -3,7 +3,7 @@
 
 # Supagrate
 
-The missing tool for [Supabase](https://supabase.com/) migrations.
+Hasura-style [Supabase](https://supabase.com/) migrations.
 
 ## Installation
 
