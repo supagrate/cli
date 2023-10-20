@@ -7,7 +7,11 @@ Hasura-style [Supabase](https://supabase.com/) migrations.
 
 ## Installation
 
-[//]: # (@TODO)
+You can download the binaries for each versions, or install it in your project via npm:
+
+```bash
+npm install --save supagrate
+```
 
 ## Commands
 
