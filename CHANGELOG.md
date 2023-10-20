@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.13](https://github.com/supagrate/cli/compare/v1.0.12...v1.0.13) (2023-10-20)
+
+
+### Bug Fixes
+
+* ignore some files for npm ([28d5cf3](https://github.com/supagrate/cli/commit/28d5cf3c08a1c9fef7712190bd2b59e912503657))
+
 ## [1.0.12](https://github.com/supagrate/cli/compare/v1.0.11...v1.0.12) (2023-10-20)
 
 
