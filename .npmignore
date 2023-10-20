@@ -1,0 +1,9 @@
+.github/
+cmd/
+internal
+migrations/
+seeds/
+supabase/
+.goreleaser.yml
+go.mod
+main.go
