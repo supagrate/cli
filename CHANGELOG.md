@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/supagrate/cli/compare/v1.0.2...v1.0.3) (2023-10-20)
+
+
+### Bug Fixes
+
+* npm release ([a97c0ea](https://github.com/supagrate/cli/commit/a97c0ea594c3885e2b7d4556525226dbce3b39cf))
+
 ## [1.0.2](https://github.com/supagrate/cli/compare/v1.0.1...v1.0.2) (2023-10-20)
 
 
