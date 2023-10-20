@@ -72,8 +72,8 @@ jobs:
         with:
           release-type: go
           package-name: ${{ env.CLI }}
-          extra-files:
-            - package.json
+          extra-files: |
+            package.json
 
       - name: Checkout
         uses: actions/checkout@v4
