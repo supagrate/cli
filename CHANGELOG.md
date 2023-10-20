@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.7](https://github.com/supagrate/cli/compare/v1.0.6...v1.0.7) (2023-10-20)
+
+
+### Bug Fixes
+
+* enable arm support ([a02aa1c](https://github.com/supagrate/cli/commit/a02aa1cb52262a0572a5dc951f67af12f049db8a))
+
 ## [1.0.6](https://github.com/supagrate/cli/compare/v1.0.5...v1.0.6) (2023-10-20)
 
 
