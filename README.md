@@ -19,15 +19,30 @@ The missing tool for [Supabase](https://supabase.com/) migrations.
 | `supagrate seed new`      | Generate a new seeder                              |
 | `supagrate status`        | View the migration status of your database         |
 
-## Roadmap
+## Database Configuration
 
-- [ ] Use already setup [Supabase CLI](https://github.com/supabase/cli) to login to the DB
-- [ ] Allow 0 setup for remote DB (to be able to run migrations on GitHub Actions)
-- [ ] Assume local DB is `postgresql://postgres:postgres@localhost:54322/postgres?sslmode=disable`
-- [x] Allow the generation of migrations
-- [x] Use `up.sql` and `down.sql` files for migrations
-- [x] Allow complete reset of the DB
-- [ ] Allow the application (up) of migrations
-- [ ] Allow the rollback of migrations
-- [ ] Allow the generation of arbitrary seeder
-- [ ] Allow the application of arbitrary seeder
+For the `supagrate migrate` and `supabase seed` commands, the default is to use the local Supabase database: 
+
+```
+postgresql://postgres:postgres@localhost:54322/postgres?sslmode=disable
+```
+
+You can override this by setting the following environment variables: 
+
+- `DB_HOST`: The host of the database (ex. db.123456.supabase.co)
+- `DB_PORT`: The port of the database (ex. 5432)
+- `DB_USER`: The user of the database (ex. postgres)
+- `DB_PASSWORD`: The password of the database (ex. postgres)
+- `DB_NAME`: The name of the database (ex. postgres)
+
+Or by setting the following flags:
+
+```bash
+supagrate migrate --db-host db.123456.supabase.co --db-port 5432 --db-user postgres --db-password postgres --db-name postgres
+```
+
+## CI
+
+You can use Supagrate in GitHub Actions to run your migrations and seeders. 
+
+Check out our [demo](https://github.com/supagrate/demo) repository for more info.
