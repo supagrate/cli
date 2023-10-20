@@ -2,11 +2,12 @@ project_name: supagrate
 builds:
   - id: supagrate
     binary: supagrate
-    no_unique_dist_dir: true
     flags:
       - -trimpath
     env:
       - CGO_ENABLED=0
+    ldflags:
+      - -s -w -X github.com/supagrate/cli/internal/utils.Version={{.Version}}
     targets:
       - darwin_amd64
       - darwin_arm64

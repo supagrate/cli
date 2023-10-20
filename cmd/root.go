@@ -7,15 +7,18 @@ import (
 	cc "github.com/ivanpirog/coloredcobra"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
+
+	"github.com/supagrate/cli/internal/utils"
 )
 
 // rootCmd represents the base command when called without any subcommands
 var (
 	verbosity string
 	rootCmd   = &cobra.Command{
-		Use:   "supagrate",
-		Short: "Supagrate is a CLI library meant to improve the database migration experience with Supabase.",
-		Long:  `Supagrate is a CLI library meant to improve the database migration experience with Supabase.`,
+		Use:     "supagrate",
+		Short:   "Supagrate CLI " + utils.Version,
+		Version: utils.Version,
+		Long:    `Supagrate is a CLI library meant to improve the database migration experience with Supabase.`,
 	}
 )
 
@@ -48,6 +51,8 @@ func init() {
 	// Here is where we bind the verbose flag
 	// Default value is the warn level
 	rootCmd.PersistentFlags().StringVarP(&verbosity, "verbosity", "v", logrus.WarnLevel.String(), "Record level (debug, info, warn, error, fatal, panic")
+
+	rootCmd.SetVersionTemplate("{{.Version}}\n")
 }
 
 func setupLogs(out io.Writer, level string) error {
