@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.8](https://github.com/supagrate/cli/compare/v1.0.7...v1.0.8) (2023-10-20)
+
+
+### Bug Fixes
+
+* update goreleaser config ([8a75a0d](https://github.com/supagrate/cli/commit/8a75a0d8fd406023aecd017ed43ff0ee05e907c0))
+
 ## [1.0.7](https://github.com/supagrate/cli/compare/v1.0.6...v1.0.7) (2023-10-20)
 
 
