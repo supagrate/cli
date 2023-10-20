@@ -17,6 +17,9 @@ builds:
 release:
   disable: true
 
+checksum:
+  name_template: "{{ .ProjectName }}_checksums.txt"
+
 archives:
   - id: supagrate
     name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ with .Arm }}v{{ . }}{{ end }}{{ with .Mips }}_{{ . }}{{ end }}{{ if not (eq .Amd64 "v1") }}{{ .Amd64 }}{{ end }}'
