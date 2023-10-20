@@ -1,4 +1,10 @@
 builds:
+  - id: bonzai
+    binary: bonzai-{{.Os}}
+    goos:
+      - darwin
+    goarch:
+      - arm64
   - id: supagrate
     binary: supagrate
     goos:
