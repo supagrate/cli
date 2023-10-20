@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.14](https://github.com/supagrate/cli/compare/v1.0.13...v1.0.14) (2023-10-20)
+
+
+### Bug Fixes
+
+* checksum name ([d784245](https://github.com/supagrate/cli/commit/d784245f407468e74b52b3e76c243b77f1ac5bde))
+
 ## [1.0.13](https://github.com/supagrate/cli/compare/v1.0.12...v1.0.13) (2023-10-20)
 
 
