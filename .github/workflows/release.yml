@@ -109,6 +109,8 @@ jobs:
       - name: Upload artifacts to release
         if: ${{ steps.release.outputs.release_created }}
         run: gh release upload ${{ steps.release.outputs.tag_name }} ./dist/supagrate*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish npm
         if: ${{ steps.release.outputs.release_created }}
