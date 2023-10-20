@@ -1,3 +1,6 @@
+![npm](https://img.shields.io/npm/v/supagrate)
+
+
 # Supagrate
 
 The missing tool for [Supabase](https://supabase.com/) migrations.
