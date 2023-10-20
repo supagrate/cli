@@ -1,6 +1,7 @@
 name: Release
 
 on:
+  pull_request:
   push:
     branches:
       - main
@@ -44,6 +45,7 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
 #    needs: build
     outputs:
       release_created: ${{ steps.release.outputs.release_created }}
