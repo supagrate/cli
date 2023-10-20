@@ -1,6 +1,8 @@
 {
   "name": "supagrate",
-  "version": "x-release-please-version",
+  "_start": "x-release-please-start-version",
+  "version": "1.0.1",
+  "_end": "x-release-please-end",
   "description": "Supagrate CLI",
   "main": "index.js",
   "type": "module",
