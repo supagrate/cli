@@ -68,7 +68,7 @@ const fetchAndParseCheckSumFile = async (packageJson, agent) => {
     const version = packageJson.version;
     const pkgName = packageJson.name;
     const repo = packageJson.repository;
-    const checksumFileUrl = `https://github.com/${repo}/releases/download/v${version}/${pkgName}_${version}-checksums.txt`;
+    const checksumFileUrl = `https://github.com/${repo}/releases/download/v${version}/${pkgName}_checksums.txt`;
 
     // Fetch the checksum file
     console.info("Downloading", checksumFileUrl);
