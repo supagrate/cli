@@ -106,6 +106,9 @@ jobs:
           version: latest
           args: release --clean -p 3 -f .goreleaser.yml
 
+      - name: Upload artifacts to release
+        run: gh release upload ${{ steps.release.outputs.tag_name }} ./dist/supagrate*
+
       - name: Publish npm
         if: ${{ steps.release.outputs.release_created }}
         env:

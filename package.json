@@ -6,22 +6,20 @@
   "description": "Supagrate CLI",
   "main": "index.js",
   "type": "module",
+  "repository": "supagrate/cli",
   "scripts": {
-    "postinstall": "go-npm install",
-    "preuninstall": "go-npm uninstall"
+    "postinstall": "node scripts/postinstall.js"
   },
   "bin": {
     "supagrate": "bin/supagrate"
-  },
-  "goBinary": {
-    "name": "supagrate",
-    "path": "./bin",
-    "url": "https://github.com/supagrate/cli/releases/download/v{{version}}/supagrate"
   },
   "keywords": [],
   "author": "“Valentin <valentin@whatdafox.com> (https://twitter.com/valentinprngd)",
   "license": "MIT",
   "dependencies": {
-    "go-npm": "^0.1.9"
+    "bin-links": "^4.0.3",
+    "https-proxy-agent": "^7.0.2",
+    "node-fetch": "^3.3.2",
+    "tar": "^6.2.0"
   }
 }
