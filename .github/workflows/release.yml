@@ -27,11 +27,6 @@ jobs:
           go-version-file: go.mod
           cache: true
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
       - name: Install modules
         run: go mod download
 
