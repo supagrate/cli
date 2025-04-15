@@ -31,21 +31,19 @@ npm install --save supagrate
 For the `supagrate migrate` and `supabase seed` commands, the default is to use the local Supabase database: 
 
 ```
-postgresql://postgres:postgres@localhost:54322/postgres?sslmode=disable
+postgresql://postgres:postgres@localhost:5432/postgres?sslmode=disable
 ```
 
-You can override this by setting the following environment variables: 
+You can override this by setting the following environment variable: 
 
-- `DB_HOST`: The host of the database (ex. db.123456.supabase.co)
-- `DB_PORT`: The port of the database (ex. 5432)
-- `DB_USER`: The user of the database (ex. postgres)
-- `DB_PASSWORD`: The password of the database (ex. postgres)
-- `DB_NAME`: The name of the database (ex. postgres)
+- `DATABASE_URL`: The full connection string to Postgres
+
+You can also use a `.env` with the DATABASE_URL in it. 
 
 Or by setting the following flags:
 
 ```bash
-supagrate migrate --db-host db.123456.supabase.co --db-port 5432 --db-user postgres --db-password postgres --db-name postgres
+supagrate migrate
 ```
 
 ## CI

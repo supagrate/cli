@@ -6,7 +6,6 @@ import (
 
 	"github.com/supagrate/cli/internal/seed/apply"
 	"github.com/supagrate/cli/internal/seed/new"
-	"github.com/supagrate/cli/internal/utils"
 )
 
 // seedCmd represents the seed command
@@ -41,7 +40,7 @@ var (
 )
 
 func init() {
-	utils.UseDBFlags(seedApplyCmd)
+	seedApplyCmd.Flags().String("connection", "", "Database connection string")
 
 	seedCmd.AddCommand(seedApplyCmd)
 	seedCmd.AddCommand(seedNewCmd)

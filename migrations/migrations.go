@@ -125,8 +125,8 @@ func ReadMigrationsFromDB(db *sql.DB) []DBMigration {
 func ReadMigrationsFromFilesystem(fs afero.Fs) []Migration {
 	migrations, err := afero.ReadDir(fs, MigrationsDirectory)
 	if err != nil {
-		logrus.Error(err)
-		os.Exit(1)
+		logrus.Warn("No migrations directory found at: " + MigrationsDirectory)
+		return []Migration{}
 	}
 
 	var upMigrations []Migration

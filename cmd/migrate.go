@@ -8,7 +8,6 @@ import (
 	"github.com/supagrate/cli/internal/migrate/new"
 	"github.com/supagrate/cli/internal/migrate/reset"
 	"github.com/supagrate/cli/internal/migrate/up"
-	"github.com/supagrate/cli/internal/utils"
 )
 
 // migrateCmd represents the migrate command
@@ -64,10 +63,12 @@ func init() {
 	migrateCmd.AddCommand(migrateResetCmd)
 	migrateCmd.AddCommand(migrateUpCmd)
 
-	utils.UseDBFlags(migrateCmd)
-
 	migrateUpCmd.Flags().StringP("count", "c", "all", "Number of migrations to apply")
 	migrateDownCmd.Flags().StringP("count", "c", "all", "Number of migrations to rollback")
+
+	migrateUpCmd.Flags().String("connection", "", "Database connection string")
+	migrateDownCmd.Flags().String("connection", "", "Database connection string")
+	migrateResetCmd.Flags().String("connection", "", "Database connection string")
 
 	rootCmd.AddCommand(migrateCmd)
 }

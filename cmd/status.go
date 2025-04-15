@@ -5,7 +5,6 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/supagrate/cli/internal/status"
-	"github.com/supagrate/cli/internal/utils"
 )
 
 // statusCmd represents the status command
@@ -21,7 +20,7 @@ var (
 )
 
 func init() {
-	utils.UseDBFlags(statusCmd)
+	statusCmd.Flags().String("connection", "", "Database connection string")
 
 	rootCmd.AddCommand(statusCmd)
 }

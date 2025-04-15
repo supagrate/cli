@@ -4,51 +4,76 @@ import (
 	"database/sql"
 	"fmt"
 	"os"
+	"path/filepath"
+	"strings"
 
+	"github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
-	"github.com/spf13/cobra"
 	"github.com/xo/dburl"
 
 	_ "github.com/lib/pq"
 )
 
-// Local Supabase: postgresql://postgres:postgres@localhost:54322/postgres
-type Connection struct {
-	Host     string
-	Port     string
-	User     string
-	Password string
-	Name     string
-}
-
-type ConnectionEnv struct {
-	Env  string
-	Flag string
-}
-
-func (c Connection) ConnectionString() string {
-	connectionString := "postgresql://" + c.User + ":" + c.Password + "@" + c.Host + ":" + c.Port + "/" + c.Name
-
-	if c.Host == "localhost" {
-		connectionString += "?sslmode=disable"
+func init() {
+	// Try to load .env file from different possible locations
+	envPaths := []string{
+		".env",
+		"../.env",
+		filepath.Join(os.Getenv("HOME"), ".supagrate", ".env"),
 	}
 
-	return connectionString
+	loaded := false
+	for _, path := range envPaths {
+		if err := godotenv.Load(path); err == nil {
+			logrus.Debugf("Loaded environment from %s", path)
+			loaded = true
+			break
+		}
+	}
+
+	if !loaded {
+		logrus.Debug("No .env file found in search paths")
+	}
 }
 
-func (c Connection) URL() *dburl.URL {
-	return ParseConnectionString(c.ConnectionString())
+type Connection struct {
+	Connection *dburl.URL
 }
 
-func UseDBFlags(cmd *cobra.Command) {
-	cmd.PersistentFlags().StringP("db-host", "d", "localhost", "Database host")
-	cmd.PersistentFlags().IntP("db-port", "o", 54322, "Database port")
-	cmd.PersistentFlags().StringP("db-user", "u", "postgres", "Database user")
-	cmd.PersistentFlags().StringP("db-password", "p", "postgres", "Database password")
-	cmd.PersistentFlags().StringP("db-name", "n", "postgres", "Database name")
+func addSSLModeIfLocalhost(connStr string) string {
+	logrus.Debugf("Processing connection string: %s", connStr)
+	if (containsLocalhost(connStr) || contains127(connStr)) && !containsSSLMode(connStr) {
+		logrus.Debugf("Local connection detected, adding sslmode=disable")
+		if hasQuery(connStr) {
+			return connStr + "&sslmode=disable"
+		}
+		return connStr + "?sslmode=disable"
+	}
+	return connStr
+}
+
+func containsLocalhost(s string) bool {
+	s = strings.ToLower(s)
+	return strings.Contains(s, "localhost") ||
+		strings.Contains(s, "host=localhost") ||
+		strings.Contains(s, "[::1]") ||
+		strings.Contains(s, "127.0.0.1")
+}
+
+func contains127(s string) bool {
+	return strings.Contains(strings.ToLower(s), "127.0.0.1")
+}
+
+func containsSSLMode(s string) bool {
+	return strings.Contains(strings.ToLower(s), "sslmode=")
+}
+
+func hasQuery(s string) bool {
+	return strings.Contains(s, "?")
 }
 
 func ParseConnectionString(connectionString string) *dburl.URL {
+	connectionString = addSSLModeIfLocalhost(connectionString)
 	u, err := dburl.Parse(connectionString)
 
 	if err != nil {
@@ -58,13 +83,38 @@ func ParseConnectionString(connectionString string) *dburl.URL {
 	return u
 }
 
-func ConnectDatabase(c Connection) *sql.DB {
-	connection := c.URL().DSN
+// GetDatabaseURL returns a *dburl.URL using DATABASE_URL if set, otherwise uses the Connection field.
+func GetDatabaseURL(c Connection) *dburl.URL {
+	dbURL := os.Getenv("DATABASE_URL")
+	if dbURL != "" {
+		logrus.Infoln("Using DATABASE_URL environment variable")
+		logrus.Debugf("Original DATABASE_URL: %s", dbURL)
+		parsed := ParseConnectionString(dbURL)
+		logrus.Debugf("Final DSN: %s", parsed.DSN)
+		return parsed
+	}
+	if c.Connection != nil {
+		return c.Connection
+	}
+	logrus.Fatal("No database connection string provided")
+	return nil
+}
 
-	db, err := sql.Open(c.URL().Driver, connection)
+func ConnectDatabase(c Connection) *sql.DB {
+	url := GetDatabaseURL(c)
+	connection := url.DSN
+	logrus.Debugf("Connecting with DSN: %s", connection)
+
+	db, err := sql.Open(url.Driver, connection)
 
 	if err != nil {
 		logrus.Fatal(err)
+	}
+
+	// Test the connection
+	err = db.Ping()
+	if err != nil {
+		logrus.Fatalf("Failed to connect to database: %v", err)
 	}
 
 	return db
@@ -131,21 +181,4 @@ func Test(db *sql.DB) {
 	}
 
 	defer rows.Close()
-}
-
-func UseDBEnvironmentVariables(cmd *cobra.Command) {
-	env := []ConnectionEnv{
-		{"DB_HOST", "db-host"},
-		{"DB_PORT", "db-port"},
-		{"DB_USER", "db-user"},
-		{"DB_PASSWORD", "db-password"},
-		{"DB_NAME", "db-name"},
-	}
-
-	for _, e := range env {
-		if value := os.Getenv(e.Env); value != "" {
-			logrus.Infoln("Using " + e.Env + " environment variable")
-			cmd.Flags().Set(e.Flag, value)
-		}
-	}
 }

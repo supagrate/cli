@@ -15,19 +15,17 @@ import (
 
 func Run(cmd *cobra.Command, fs afero.Fs) {
 	_init.EnsureInitialization()
-	utils.UseDBEnvironmentVariables(cmd)
 
 	count := utils.ParseCount(cmd.Flag("count").Value.String())
 
-	connection := utils.Connection{
-		Host:     cmd.Flag("db-host").Value.String(),
-		Port:     cmd.Flag("db-port").Value.String(),
-		User:     cmd.Flag("db-user").Value.String(),
-		Password: cmd.Flag("db-password").Value.String(),
-		Name:     cmd.Flag("db-name").Value.String(),
+	connectionString := cmd.Flag("connection").Value.String()
+	var conn *utils.Connection
+	if connectionString != "" {
+		conn = &utils.Connection{Connection: utils.ParseConnectionString(connectionString)}
+	} else {
+		conn = &utils.Connection{Connection: nil}
 	}
-
-	db := utils.ConnectDatabase(connection)
+	db := utils.ConnectDatabase(*conn)
 
 	utils.EnsureMigrationTable(db)
 
