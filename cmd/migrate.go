@@ -4,6 +4,7 @@ import (
 	"github.com/spf13/afero"
 	"github.com/spf13/cobra"
 
+	"github.com/supagrate/cli/internal/migrate/diff"
 	"github.com/supagrate/cli/internal/migrate/down"
 	"github.com/supagrate/cli/internal/migrate/new"
 	"github.com/supagrate/cli/internal/migrate/reset"
@@ -24,6 +25,15 @@ var (
 		Long:  `Rollback migration from your database`,
 		Run: func(cmd *cobra.Command, args []string) {
 			down.Run(cmd, afero.NewOsFs())
+		},
+	}
+
+	migrateDiffCmd = &cobra.Command{
+		Use:   "diff [flags]",
+		Short: "Show schema differences and optionally create a migration",
+		Long:  `Show schema differences between your current database and migrations, and optionally create a migration file`,
+		Run: func(cmd *cobra.Command, args []string) {
+			diff.Run(cmd, afero.NewOsFs())
 		},
 	}
 
@@ -59,6 +69,7 @@ var (
 
 func init() {
 	migrateCmd.AddCommand(migrateDownCmd)
+	migrateCmd.AddCommand(migrateDiffCmd)
 	migrateCmd.AddCommand(migrateNewCmd)
 	migrateCmd.AddCommand(migrateResetCmd)
 	migrateCmd.AddCommand(migrateUpCmd)
@@ -69,6 +80,10 @@ func init() {
 	migrateUpCmd.Flags().String("connection", "", "Database connection string")
 	migrateDownCmd.Flags().String("connection", "", "Database connection string")
 	migrateResetCmd.Flags().String("connection", "", "Database connection string")
+	migrateDiffCmd.Flags().String("connection", "", "Database connection string")
+	migrateDiffCmd.Flags().StringP("file", "f", "", "Create a new migration with the given name")
+	migrateDiffCmd.Flags().Bool("debug", false, "Show debug output")
+	migrateDiffCmd.Flags().StringSlice("schemas", []string{"public"}, "Schemas to include in comparison (comma-separated)")
 
 	rootCmd.AddCommand(migrateCmd)
 }

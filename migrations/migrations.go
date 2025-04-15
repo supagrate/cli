@@ -2,6 +2,7 @@ package migrations
 
 import (
 	"database/sql"
+	"fmt"
 	"os"
 	"path/filepath"
 	"slices"
@@ -20,32 +21,32 @@ type Migration struct {
 	Down     string
 }
 
-func (migration Migration) Apply(db *sql.DB) {
+func (migration Migration) Apply(db *sql.DB) error {
 	logrus.Info("Applying migration: " + migration.FileName)
 
 	_, err := db.Exec(migration.Up)
-
 	if err != nil {
-		logrus.Error(err)
-		os.Exit(1)
+		return fmt.Errorf("failed to apply migration: %v", err)
 	}
 
-	migration.Record(db)
+	if err := migration.Record(db); err != nil {
+		return fmt.Errorf("failed to record migration: %v", err)
+	}
 
 	logrus.Info("Migration applied: " + migration.FileName)
+	return nil
 }
 
-func (migration Migration) Record(db *sql.DB) {
+func (migration Migration) Record(db *sql.DB) error {
 	logrus.Info("Recording migration: " + migration.FileName)
 
 	_, err := db.Exec("insert into supagrate.migrations (name) values ($1)", migration.FileName)
-
 	if err != nil {
-		logrus.Error(err)
-		os.Exit(1)
+		return fmt.Errorf("failed to record migration: %v", err)
 	}
 
 	logrus.Info("Migration recorded: " + migration.FileName)
+	return nil
 }
 
 func (migration Migration) Rollback(db *sql.DB) {

@@ -13,11 +13,16 @@ You can download the binaries for each versions, or install it in your project v
 npm install --save supagrate
 ```
 
+### Requirements
+
+- Docker (for schema diffing)
+
 ## Commands
 
 | Command                   | Description                                        |
 |---------------------------|----------------------------------------------------|
 | `supagrate init`          | Setup your project with supagrate                  |
+| `supagrate migrate diff`  | Show schema differences and create migrations      |
 | `supagrate migrate down`  | Rollback your migrations one by one                |
 | `supagrate migrate new`   | Generate a new migration                           |
 | `supagrate migrate reset` | Reset your database and apply all migrations again |
